@@ -1,0 +1,58 @@
+[
+    {
+        "date": "2025-06-28",
+        "hours": 8.0,
+        "boxes": 2000,
+        "salary": 400.0,
+        "percent": 131.58
+    },
+    {
+        "date": "2025-06-29",
+        "hours": 7.5,
+        "boxes": 2100,
+        "salary": 420.0,
+        "percent": 147.37
+    },
+    {
+        "date": "2025-06-30",
+        "hours": 6.0,
+        "boxes": 2000,
+        "salary": 400.0,
+        "percent": 175.44
+    },
+    {
+        "date": "2025-06-31",
+        "hours": 6.0,
+        "boxes": 2000,
+        "salary": 400.0,
+        "percent": 175.44
+    },
+    {
+        "date": "2025-06-06",
+        "hours": 8.0,
+        "boxes": 2400,
+        "salary": 480.0,
+        "percent": 157.89
+    },
+    {
+        "date": "2025-07-04",
+        "hours": 8.0,
+        "boxes": 3000,
+        "salary": 600.0,
+        "percent": 197.37
+    },
+    {
+        "date": "2025-07-05",
+        "hours": 7.0,
+        "boxes": 2100,
+        "salary": 420.0,
+        "percent": 157.89
+    },
+    {
+        "date": "2025-07-05",
+        "hours": 8.0,
+        "boxes": 5000,
+        "salary": 1000.0,
+        "percent": 328.95
+    }
+]

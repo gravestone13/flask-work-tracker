@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Splash screen для iPhone SE -->
+    <link rel="apple-touch-startup-image" href="/static/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+
+    <!-- Splash screen для iPhone XR, 11 -->
+    <link rel="apple-touch-startup-image" href="/static/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+
+    <!-- Splash screen для iPhone 13/14 Pro -->
+    <link rel="apple-touch-startup-image" href="/static/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="apple-touch-icon" href="/static/icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Отчёт за месяц</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            background: #f0f2f5;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 12px;
+            padding: 10px;
+            width: 100%;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .summary, .shifts {
+            background: white;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        li {
+            margin-top: 8px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #2196F3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Отчёт за месяц</h1>
+
+    <form method="POST">
+        <label for="month">Месяц (ГГГГ-ММ):</label>
+        <input type="text" name="month" id="month" placeholder="2025-07" required>
+        <button type="submit">Показать</button>
+    </form>
+
+    {% if summary %}
+    <div class="summary">
+        <h2>Итоги:</h2>
+        <p>Часы: <strong>{{ summary.total_hours }}</strong></p>
+        <p>Коробки: <strong>{{ summary.total_boxes }}</strong></p>
+        <p>Зарплата: <strong>{{ summary.total_salary }} zł</strong></p>
+        <p>Средний %: <strong>{{ summary.average_percent }}%</strong></p>
+    </div>
+
+    <div class="shifts">
+        <h3>Смены:</h3>
+        <ul>
+        {% for s in shifts %}
+            <li>{{ s.date }} — {{ s.hours }} ч, {{ s.boxes }} коробок, {{ s.percent }}%, {{ s.salary }} zł</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% elif shifts is not none %}
+        <p style="text-align: center; margin-top: 20px;">📭 Нет данных за выбранный месяц.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">← Назад к учёту</a>
+</body>
+</html>
