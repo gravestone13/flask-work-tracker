@@ -3,20 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Splash screen для iPhone SE -->
-    <link rel="apple-touch-startup-image" href="/static/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-
-    <!-- Splash screen для iPhone XR, 11 -->
-    <link rel="apple-touch-startup-image" href="/static/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
-
-    <!-- Splash screen для iPhone 13/14 Pro -->
-    <link rel="apple-touch-startup-image" href="/static/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
-
-    <link rel="manifest" href="/static/manifest.json">
-    <link rel="apple-touch-icon" href="/static/icon.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <title>Учёт смен</title>
     <style>
         body {
@@ -26,19 +12,23 @@
             margin: auto;
             background: #f6f8fa;
         }
+
         h1, h2 {
             text-align: center;
         }
+
         form {
             background: white;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         label {
             display: block;
             margin-top: 10px;
         }
+
         input {
             width: 100%;
             padding: 8px;
@@ -46,6 +36,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+
         button {
             margin-top: 15px;
             padding: 10px;
@@ -56,23 +47,42 @@
             border-radius: 5px;
             font-size: 16px;
         }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
+
+        .shift {
             background: white;
             margin-top: 10px;
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            text-align: center;
-            color: #4CAF50;
+
+        .shift-actions {
+            margin-top: 8px;
+        }
+
+        .shift-actions a {
+            text-decoration: none;
+            margin-right: 10px;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
             font-weight: bold;
+        }
+
+        .edit {
+            background-color: #007bff;
+        }
+
+        .delete {
+            background-color: #dc3545;
+        }
+
+        a.report-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #4CAF50;
         }
     </style>
 </head>
@@ -92,16 +102,20 @@
     </form>
 
     <h2>Все смены</h2>
-    <ul>
-    {% for s in shifts %}
-        <li>
-            {{ s.date }} — {{ s.hours }} ч, {{ s.boxes }} коробок, {{ s.percent }}%, {{ s.salary }} zł
-        </li>
+    {% if shifts %}
+        {% for shift in shifts %}
+            <div class="shift">
+                {{ shift.date }} — {{ shift.hours }} ч, {{ shift.boxes }} коробок, {{ shift.percent }}%, {{ shift.salary }} zł
+                <div class="shift-actions">
+                    <a href="{{ url_for('edit_shift', index=loop.index0) }}" class="edit">✏️</a>
+                    <a href="{{ url_for('delete_shift', index=loop.index0) }}" class="delete" onclick="return confirm('Удалить смену?')">❌</a>
+                </div>
+            </div>
+        {% endfor %}
     {% else %}
-        <p>Нет данных</p>
-    {% endfor %}
-    </ul>
+        <p>📭 Нет смен</p>
+    {% endif %}
 
-    <a href="{{ url_for('report') }}">📊 Перейти к отчёту</a>
+    <a href="/report" class="report-link">📊 Перейти к отчёту</a>
 </body>
 </html>

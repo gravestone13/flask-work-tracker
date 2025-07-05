@@ -1,16 +1,19 @@
 import json
 import os
 
-def load_shifts(filename="data/shifts.json"):
-    if not os.path.exists(filename):
+FILE = "shifts.json"
+
+def load_shifts():
+    if not os.path.exists(FILE):
         return []
+    with open(FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-    with open(filename, "r") as file:
-        return json.load(file)
-
-def save_shift(shift, filename="data/shifts.json"):
-    shifts = load_shifts(filename)
+def save_shift(shift):
+    shifts = load_shifts()
     shifts.append(shift)
+    save_shift_list(shifts)
 
-    with open(filename, "w") as file:
-        json.dump(shifts, file, indent=4)
+def save_shift_list(shifts):
+    with open(FILE, "w", encoding="utf-8") as f:
+        json.dump(shifts, f, ensure_ascii=False, indent=4)
