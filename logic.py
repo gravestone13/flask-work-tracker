@@ -1,10 +1,16 @@
 def calculate_salary(boxes, hours):
     boxes_per_hour = boxes / hours if hours > 0 else 0
     percent = round((boxes_per_hour / 190) * 100, 2)
-    base_salary = 38 * hours
-    piecework_salary = 0.2 * boxes
-    salary = max(base_salary, piecework_salary)
+
+    if percent < 100:
+        salary = 28 * hours
+    else:
+        base_salary = 38 * hours
+        piecework_salary = 0.2 * boxes
+        salary = max(base_salary, piecework_salary)
+
     return {"salary": round(salary, 2), "percent": percent}
+
 
 
 def filter_shifts_by_month(shifts, month_str):
