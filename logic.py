@@ -1,13 +1,23 @@
-def calculate_salary(boxes, hours):
-    boxes_per_hour = boxes / hours if hours > 0 else 0
-    percent = round((boxes_per_hour / 190) * 100, 2)
+def calculate_salary(boxes, hours, process="P01"):
+    norms = {
+        "P01": 190,
+        "P03": 287,
+        "P21": 175,
+        "P16": 250
+    }
+
+    if hours <= 0 or process not in norms:
+        return {"salary": 0, "percent": 0}
+
+    norm = norms[process]
+    boxes_per_hour = boxes / hours
+    percent = round((boxes_per_hour / norm) * 100, 2)
 
     if percent < 100:
         salary = 28 * hours
     else:
-        base_salary = 38 * hours
-        piecework_salary = 0.2 * boxes
-        salary = max(base_salary, piecework_salary)
+        rate_per_box = 38 / norm
+        salary = rate_per_box * boxes
 
     return {"salary": round(salary, 2), "percent": percent}
 

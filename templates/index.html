@@ -98,23 +98,35 @@
         <label>Коробки:</label>
         <input type="number" name="boxes" required>
 
+        <label>Процесс:</label>
+        <select name="process" required>
+        <option value="P01">P01 (норма 190)</option>
+        <option value="P03">P03 (норма 287)</option>
+        <option value="P21">P21 (норма 175)</option>
+        <option value="P16">P16 (норма 250)</option>
+        </select>
+
+
         <button type="submit">Сохранить смену</button>
     </form>
 
     <h2>Все смены</h2>
-    {% if shifts %}
-        {% for shift in shifts %}
-            <div class="shift">
-                {{ shift.date }} — {{ shift.hours }} ч, {{ shift.boxes }} коробок, {{ shift.percent }}%, {{ shift.salary }} zł
-                <div class="shift-actions">
-                    <a href="{{ url_for('edit_shift', index=loop.index0) }}" class="edit">✏️</a>
-                    <a href="{{ url_for('delete_shift', index=loop.index0) }}" class="delete" onclick="return confirm('Удалить смену?')">❌</a>
-                </div>
+{% if shifts %}
+    {% for shift in shifts %}
+        <div class="shift">
+            {{ shift.date }} — {{ shift.hours }} ч, {{ shift.boxes }} коробок,
+            <strong>{{ shift.process }}</strong>,
+            {{ shift.percent }}%, {{ shift.salary }} zł
+            <div class="shift-actions">
+                <a href="{{ url_for('edit_shift', index=loop.index0) }}" class="edit">✏️</a>
+                <a href="{{ url_for('delete_shift', index=loop.index0) }}" class="delete" onclick="return confirm('Удалить смену?')">❌</a>
             </div>
-        {% endfor %}
-    {% else %}
-        <p>📭 Нет смен</p>
-    {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>📭 Нет смен</p>
+{% endif %}
+
 
     <a href="/report" class="report-link">📊 Перейти к отчёту</a>
 </body>

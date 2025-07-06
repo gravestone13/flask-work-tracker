@@ -76,6 +76,13 @@
         <input type="number" name="hours" step="0.1" value="{{ shift['hours'] }}" required>
 
         <label>Коробки:</label>
+        <label>Процесс:</label>
+        <select name="process" required>
+            {% for p in ["P01", "P03", "P21", "P16"] %}
+                 <option value="{{ p }}" {% if shift.process == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+        </select>
+
         <input type="number" name="boxes" value="{{ shift['boxes'] }}" required>
 
         <button type="submit">💾 Сохранить изменения</button>
